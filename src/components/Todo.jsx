@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import todo_icon from "../assets/todo_icon.png";
 import TodoItem from "./TodoItem";
+import usePersistedState from "../hooks/usePersistedState";
 
 function Todo() {
-  const [id, setId] = useState(0);
-  const [todoItems, setTodoItems] = useState([]);
-  const [editMode, setEditMode] = useState(false);
-  const [itemIdToEdit, setItemIdToEdit] = useState(-1);
-  const [allMarked, setAllMarked] = useState(false);
+  const [id, setId] = usePersistedState("id", 0);
+  const [todoItems, setTodoItems] = usePersistedState("todoItems", []);
+  const [editMode, setEditMode] = usePersistedState("editMode", false);
+  const [itemIdToEdit, setItemIdToEdit] = usePersistedState("itemIdToEdit", -1);
+  const [allMarked, setAllMarked] = usePersistedState("allMarked", false);
 
   function addTodo(formData) {
     const todoItem = formData.get("todoItem");
@@ -97,7 +98,7 @@ function Todo() {
         ? setAllMarked(true)
         : setAllMarked(false);
     }
-  }, [todoItems]);
+  }, [todoItems, setAllMarked]);
 
   return (
     <div className="bg-slate-300 my-12 pb-4 w-[25rem] min-h-[30rem] rounded-3xl">
